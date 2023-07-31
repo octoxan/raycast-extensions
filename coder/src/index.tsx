@@ -2,7 +2,7 @@ import { ActionPanel, Action, Color, Detail, Icon, List, getPreferenceValues, op
 import { useFetch, Response } from "@raycast/utils";
 import { useEffect, useState } from "react";
 import { filter } from 'lodash';
-import fetch from "node-fetch";
+import fetch, { RequestInit } from "node-fetch"; 
 import { exec } from "child_process";
 
 export interface Preferences {

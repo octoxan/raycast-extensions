@@ -335,14 +335,14 @@ function SearchListItem({ searchResult }: { searchResult: SearchResult }) {
           </ActionPanel.Section>
           {!isOffStatus && (
             <ActionPanel.Section>
-              <Action title="Open in Local VS Code" onAction={openLocalVSC} icon={Icon.Code} shortcut={{ modifiers: ["cmd"], key: "1" }} />
-              <Action.OpenInBrowser title="Open in Cloud VS Code" url={`https://embold.dev/app/code?workspaceId=${searchResult.id}`} icon={Icon.Cloud} shortcut={{ modifiers: ["cmd"], key: "2" }} />
-              <Action.OpenInBrowser title="Open Cloud Terminal" url={`https://embold.dev/app/terminal?workspaceId=${searchResult.id}`} icon={Icon.Terminal} shortcut={{ modifiers: ["cmd"], key: "3" }} />
-              <Action.OpenInBrowser title="Open Dev URL" url={`https://${searchResult.name}--${userName}.embold.dev`} shortcut={{ modifiers: ["cmd"], key: "4" }} />
+              <Action title="Open in Local VS Code" onAction={openLocalVSC} icon={Icon.Code} shortcut={{ modifiers: ["cmd"], key: "3" }} />
+              <Action.OpenInBrowser title="Open in Cloud VS Code" url={`https://embold.dev/app/code?workspaceId=${searchResult.id}`} icon={Icon.Cloud} shortcut={{ modifiers: ["cmd"], key: "4" }} />
+              <Action.OpenInBrowser title="Open Cloud Terminal" url={`https://embold.dev/app/terminal?workspaceId=${searchResult.id}`} icon={Icon.Terminal} shortcut={{ modifiers: ["cmd"], key: "5" }} />
+              <Action.OpenInBrowser title="Open Dev URL" url={`https://${searchResult.name}--${userName}.embold.dev`} shortcut={{ modifiers: ["cmd"], key: "6" }} />
             </ActionPanel.Section>
           )}
           <ActionPanel.Section>
-            <Action.OpenInBrowser title="Show Coder Dashboard" icon={Icon.AppWindowGrid3x3} url={`https://embold.dev/workspaces?workspace=${searchResult.id}`} shortcut={{ modifiers: ["cmd"], key: "5" }} />
+            <Action.OpenInBrowser title="Show Coder Dashboard" icon={Icon.AppWindowGrid3x3} url={`https://embold.dev/workspaces?workspace=${searchResult.id}`} shortcut={{ modifiers: ["cmd"], key: "7" }} />
           </ActionPanel.Section>
         </ActionPanel>
       }

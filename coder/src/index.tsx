@@ -6,6 +6,7 @@ import fetch, { RequestInit } from "node-fetch";
 import { exec } from "child_process";
 
 export interface Preferences {
+  coderURL: string;
   coderAPIKey: string;
   coderUserID: string;
   coderUserName: string;
@@ -16,6 +17,8 @@ export default function Command() {
   const [workspaces, setWorkspaces] = useState<SearchResult[]>([]);
 
   const preferences = getPreferenceValues<Preferences>();
+
+  const coderURL = preferences.coderURL;
   const apiKey = preferences.coderAPIKey;
   const userId = preferences.coderUserID;
   const userName = preferences.coderUserName;
@@ -36,8 +39,24 @@ export default function Command() {
 
   // Fetch the updated list of workspaces
   const fetchWorkspaces = async (): Promise<SearchResult[]> => {
+    const command = `coder config-ssh`;
+
+    exec(command, (error, stdout, stderr) => {
+      if (error) {
+        console.error(`Error executing command: ${error.message}`);
+        return;
+      }
+
+      if (stderr) {
+        console.error(`Command execution stderr: ${stderr}`);
+        return;
+      }
+
+      console.log(`Command executed successfully: ${stdout}`);
+    });
+
     try {
-      const response = await fetch("https://embold.dev/api/v0/workspaces?users=" + userId, {
+      const response = await fetch(`${coderURL}/api/v0/workspaces?users=${userId}`, {
         headers: {
           'Session-Token': apiKey,
         },
@@ -78,7 +97,7 @@ export default function Command() {
 
   // Refresh the workspaces every 2 seconds
   useEffect(() => {
-    const interval = setInterval(refreshWorkspaces, 2000);
+    const interval = setInterval(refreshWorkspaces, 4000);
 
     // Clean up the interval when the component is unmounted
     return () => clearInterval(interval);
@@ -120,6 +139,7 @@ export default function Command() {
 
 function SearchListItem({ searchResult }: { searchResult: SearchResult }) {
   const preferences = getPreferenceValues<Preferences>();
+  const coderURL = preferences.coderURL;
   const userName = preferences.coderUserName;
 
   const [isStarting, setIsStarting] = useState(false);
@@ -221,7 +241,7 @@ function SearchListItem({ searchResult }: { searchResult: SearchResult }) {
     const stopWorkspaceAPI = async () => {
       try {
         // API URL for stopping the workspace
-        const stopUrl = `https://apidocs.embold.dev/api/v0/workspaces/${searchResult.id}/stop`;
+        const stopUrl = `${coderURL}/api/v0/workspaces/${searchResult.id}/stop`;
 
         // API key from preferences
         const preferences = getPreferenceValues<Preferences>();
@@ -328,23 +348,6 @@ function SearchListItem({ searchResult }: { searchResult: SearchResult }) {
       }
     />
   );
-}
-
-async function parseFetchResponse(response: Response) {
-  if (!response.ok) {
-    throw new Error(response.statusText);
-  }
-
-  const json = await response.json();
-
-  // Assuming the data you provided is an array of workspace objects
-  return json.map((workspace: any) => ({
-    id: workspace.id,
-    name: workspace.name,
-    status: workspace.provider_status.container_status,
-    // Add the rest of the properties here based on the interface above
-    // For example: image_id: workspace.image_id, image_tag: workspace.image_tag, etc.
-  })) as SearchResult[];
 }
 
 interface SearchResult {

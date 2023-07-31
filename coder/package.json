@@ -52,12 +52,6 @@
       ]
     },
     {
-      "name": "rebuildConfig",
-      "title": "Rebuild SSH Config",
-      "description": "Runs the command for if you've added a new workspace and need to update your local SSH config.",
-      "mode": "no-view"
-    },
-    {
       "name": "userList",
       "title": "User List with IDs - Must Run for Initial Setup",
       "description": "Used to get Coder User ID for extension preferences",
@@ -65,6 +59,14 @@
     }
   ],
   "preferences": [
+    {
+      "title": "Coder API URL",
+      "name": "coderURL",
+      "description": "Your Coder API URL, must be prefaced with apidocs ex: https://apidocs.example.com",
+      "type": "textfield",
+      "required": true,
+      "defaultValue": "https://apidocs.example.com"
+    },
     {
       "title": "Coder API Key",
       "name": "coderAPIKey",

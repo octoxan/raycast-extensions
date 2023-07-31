@@ -28,7 +28,7 @@ export default async function Command() {
       throw new Error("Failed to fetch workspaces.");
     }
 
-    const data = await response.json();
+    const data = (await response.json()) as any[];
 
     // Assuming the data you provided is an array of workspace objects
     const workspaces = data.map((workspace: any) => ({

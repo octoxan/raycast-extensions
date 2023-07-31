@@ -18,7 +18,7 @@ export default function main(props: LaunchProps<{ arguments: Arguments }>) {
         await executeCommand(command);
       } catch (error) {
         console.error("Error while starting the workspace:", error);
-        setOutput("Error: " + error.message);
+        setOutput("Error: " + (error as Error).message);
       }
       setIsLoading(false);
     };

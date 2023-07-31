@@ -47,7 +47,7 @@ export default function Command() {
         throw new Error("Failed to fetch workspaces.");
       }
 
-      const json = await response.json();
+      const json = (await response.json()) as any[];
 
       return json.map((workspace: any) => ({
         id: workspace.id,
@@ -322,7 +322,7 @@ function SearchListItem({ searchResult }: { searchResult: SearchResult }) {
             </ActionPanel.Section>
           )}
           <ActionPanel.Section>
-            <Action.OpenInBrowser title="Show Coder Dashboard" icon={Icon.AppWindow} url={`https://embold.dev/workspaces?workspace=${searchResult.id}`} shortcut={{ modifiers: ["cmd"], key: "5" }} />
+            <Action.OpenInBrowser title="Show Coder Dashboard" icon={Icon.AppWindowGrid3x3} url={`https://embold.dev/workspaces?workspace=${searchResult.id}`} shortcut={{ modifiers: ["cmd"], key: "5" }} />
           </ActionPanel.Section>
         </ActionPanel>
       }

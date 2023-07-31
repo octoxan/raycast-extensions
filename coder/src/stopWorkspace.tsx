@@ -19,7 +19,7 @@ export default function main(props: LaunchProps<{ arguments: Arguments }>) {
         setOutput(output);
       } catch (error) {
         console.error("Error while stopping the workspace:", error);
-        setOutput("Error: " + error.message);
+        setOutput("Error: " + (error as Error).message);
       }
       setIsLoading(false);
     };

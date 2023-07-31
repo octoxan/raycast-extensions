@@ -42,7 +42,7 @@ export default function Command() {
           return;
         }
 
-        const data = await response.json();
+        const data = (await response.json()) as any[];
 
         // Assuming the data you provided is an array of user objects
         const users = data.map((user: any) => ({

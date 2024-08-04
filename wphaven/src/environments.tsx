@@ -169,6 +169,11 @@ function SearchListItem({ searchResult }: { searchResult: SearchResult }) {
             title: "Failed. Ensure WPHaven Connect plugin active."
           });
         } else {
+          await showToast({
+            style: Toast.Style.Success,
+            title: "Magic login generated."
+          });
+
           open(output.link ?? '');
         }
 

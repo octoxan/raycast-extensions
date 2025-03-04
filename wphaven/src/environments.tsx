@@ -1,9 +1,19 @@
-import { ActionPanel, Action, Clipboard, Color, Detail, Icon, List, getPreferenceValues, openExtensionPreferences, showToast, Toast, open } from "@raycast/api";
-import { useFetch, Response } from "@raycast/utils";
+import {
+  ActionPanel,
+  Action,
+  Color,
+  Detail,
+  Icon,
+  List,
+  getPreferenceValues,
+  openExtensionPreferences,
+  showToast,
+  Toast,
+  open,
+} from "@raycast/api";
 import { useEffect, useState } from "react";
-import { filter } from 'lodash';
+import { filter } from "lodash";
 import fetch, { RequestInit } from "node-fetch";
-import { exec } from "child_process";
 
 export interface Preferences {
   token: string;
@@ -35,7 +45,7 @@ export default function Command() {
     try {
       const response = await fetch(`https://wphaven.app/api/v1/raycast/environments`, {
         headers: {
-          'Authorization': `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -84,7 +94,6 @@ export default function Command() {
   const filteredData = searchText
     ? filter(environments, (environment) => environment.name.includes(searchText))
     : environments;
-
 
   return (
     <List
@@ -139,7 +148,7 @@ function SearchListItem({ searchResult }: { searchResult: SearchResult }) {
       try {
         await showToast({
           style: Toast.Style.Animated,
-          title: "Generating magic login."
+          title: "Generating magic login.",
         });
 
         const url = `https://wphaven.app/api/v1/raycast/environments/${searchResult.id}/magic-login`;
@@ -152,7 +161,7 @@ function SearchListItem({ searchResult }: { searchResult: SearchResult }) {
         const options: RequestInit = {
           method: "GET",
           headers: {
-            'Authorization': `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           },
         } as RequestInit;
 
@@ -166,15 +175,15 @@ function SearchListItem({ searchResult }: { searchResult: SearchResult }) {
 
           await showToast({
             style: Toast.Style.Failure,
-            title: "Failed. Ensure WPHaven Connect plugin active."
+            title: "Failed. Ensure WPHaven Connect plugin active.",
           });
         } else {
           await showToast({
             style: Toast.Style.Success,
-            title: "Magic login generated."
+            title: "Magic login generated.",
           });
 
-          open(output.link ?? '');
+          open(output.link ?? "");
         }
 
         setIsLoggingIn(false);
@@ -186,9 +195,9 @@ function SearchListItem({ searchResult }: { searchResult: SearchResult }) {
 
     // Check if the API call should be made
     if (isLoggingIn) {
-      console.log('starting');
+      console.log("starting");
 
-        startLoggingIn();
+      startLoggingIn();
     }
   }, [isLoggingIn]);
 
@@ -206,7 +215,7 @@ function SearchListItem({ searchResult }: { searchResult: SearchResult }) {
         const options: RequestInit = {
           method: "GET",
           headers: {
-            'Authorization': `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           },
         } as RequestInit;
 
@@ -217,11 +226,10 @@ function SearchListItem({ searchResult }: { searchResult: SearchResult }) {
         if (!response.ok) {
           await showToast({
             style: Toast.Style.Failure,
-            title: "Failed generating VS Code link."
+            title: "Failed generating VS Code link.",
           });
         } else {
-
-          open(output.link ?? '');
+          open(output.link ?? "");
         }
 
         setIsLoggingIn(false);
@@ -233,7 +241,7 @@ function SearchListItem({ searchResult }: { searchResult: SearchResult }) {
 
     // Check if the API call should be made
     if (isGeneratingVsCode) {
-      console.log('starting vs code link');
+      console.log("starting vs code link");
 
       startVsCode();
     }
@@ -253,7 +261,7 @@ function SearchListItem({ searchResult }: { searchResult: SearchResult }) {
         const options: RequestInit = {
           method: "GET",
           headers: {
-            'Authorization': `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           },
         } as RequestInit;
 
@@ -264,11 +272,10 @@ function SearchListItem({ searchResult }: { searchResult: SearchResult }) {
         if (!response.ok) {
           await showToast({
             style: Toast.Style.Failure,
-            title: "Failed generating SSH link."
+            title: "Failed generating SSH link.",
           });
         } else {
-
-          open(output.link ?? '');
+          open(output.link ?? "");
         }
 
         setIsGeneratingSsh(false);
@@ -280,7 +287,7 @@ function SearchListItem({ searchResult }: { searchResult: SearchResult }) {
 
     // Check if the API call should be made
     if (isGeneratingSsh) {
-      console.log('starting ssh link');
+      console.log("starting ssh link");
 
       startSsh();
     }
@@ -292,7 +299,7 @@ function SearchListItem({ searchResult }: { searchResult: SearchResult }) {
       try {
         await showToast({
           style: Toast.Style.Animated,
-          title: "Attempting to clear cache."
+          title: "Attempting to clear cache.",
         });
 
         const url = `https://wphaven.app/api/v1/raycast/environments/${searchResult.id}/cache`;
@@ -305,7 +312,7 @@ function SearchListItem({ searchResult }: { searchResult: SearchResult }) {
         const options: RequestInit = {
           method: "GET",
           headers: {
-            'Authorization': `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           },
         } as RequestInit;
 
@@ -316,12 +323,12 @@ function SearchListItem({ searchResult }: { searchResult: SearchResult }) {
         if (!response.ok) {
           await showToast({
             style: Toast.Style.Failure,
-            title: "Failed clearing cache."
+            title: "Failed clearing cache.",
           });
         } else {
           await showToast({
             style: Toast.Style.Success,
-            title: "All detected caches cleared."
+            title: "All detected caches cleared.",
           });
         }
 
@@ -334,7 +341,7 @@ function SearchListItem({ searchResult }: { searchResult: SearchResult }) {
 
     // Check if the API call should be made
     if (isClearingCache) {
-      console.log('starting ssh link');
+      console.log("starting ssh link");
 
       startCacheClear();
     }
@@ -359,17 +366,52 @@ function SearchListItem({ searchResult }: { searchResult: SearchResult }) {
       actions={
         <ActionPanel>
           <ActionPanel.Section>
-              <Action title="Magic Login" onAction={magicLogin} icon={Icon.Key} shortcut={{ modifiers: ["cmd"], key: "1" }} />
-              <Action.OpenInBrowser title="Frontend" icon={Icon.House} url={`${searchResult.name}`} shortcut={{ modifiers: ["cmd"], key: "2" }} />
+            <Action
+              title="Magic Login"
+              onAction={magicLogin}
+              icon={Icon.Key}
+              shortcut={{ modifiers: ["cmd"], key: "1" }}
+            />
+            <Action.OpenInBrowser
+              title="Frontend"
+              icon={Icon.House}
+              url={`${searchResult.name}`}
+              shortcut={{ modifiers: ["cmd"], key: "2" }}
+            />
           </ActionPanel.Section>
-        <ActionPanel.Section>
-            <Action title="VS Code" onAction={vsCodeLink} icon={Icon.Code} shortcut={{ modifiers: ["cmd"], key: "3" }} />
-            <Action title="Terminal" onAction={sshLink} icon={Icon.Terminal} shortcut={{ modifiers: ["cmd"], key: "4" }} />
-            <Action.OpenInBrowser title="GitHub" icon={Icon.Dna} url={`${searchResult.git}`} shortcut={{ modifiers: ["cmd"], key: "5" }} />
-            <Action title="Clear Cache" onAction={clearCache} icon={Icon.Trash} shortcut={{ modifiers: ["cmd"], key: "6" }} />
-        </ActionPanel.Section>
           <ActionPanel.Section>
-            <Action.OpenInBrowser title="WP Haven Dashboard" icon={Icon.AppWindowSidebarLeft} url={`${searchResult.dashboard}`} shortcut={{ modifiers: ["cmd"], key: "7" }} />
+            <Action
+              title="VS Code"
+              onAction={vsCodeLink}
+              icon={Icon.Code}
+              shortcut={{ modifiers: ["cmd"], key: "3" }}
+            />
+            <Action
+              title="Terminal"
+              onAction={sshLink}
+              icon={Icon.Terminal}
+              shortcut={{ modifiers: ["cmd"], key: "4" }}
+            />
+            <Action.OpenInBrowser
+              title="GitHub"
+              icon={Icon.Dna}
+              url={`${searchResult.git}`}
+              shortcut={{ modifiers: ["cmd"], key: "5" }}
+            />
+            <Action
+              title="Clear Cache"
+              onAction={clearCache}
+              icon={Icon.Trash}
+              shortcut={{ modifiers: ["cmd"], key: "6" }}
+            />
+          </ActionPanel.Section>
+          <ActionPanel.Section>
+            <Action.OpenInBrowser
+              title="WP Haven Dashboard"
+              icon={Icon.AppWindowSidebarLeft}
+              url={`${searchResult.dashboard}`}
+              shortcut={{ modifiers: ["cmd"], key: "7" }}
+            />
           </ActionPanel.Section>
         </ActionPanel>
       }
@@ -380,12 +422,12 @@ function SearchListItem({ searchResult }: { searchResult: SearchResult }) {
 interface SearchResult {
   id: string;
   name: string;
-  stage: string,
-  dashboard: string,
-  git: string,
+  stage: string;
+  dashboard: string;
+  git: string;
 }
 
 interface HavenResponse {
-    link?: string;
-    message?: string;
-  }
+  link?: string;
+  message?: string;
+}

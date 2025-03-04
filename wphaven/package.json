@@ -1,7 +1,7 @@
 {
   "$schema": "https://www.raycast.com/schemas/extension.json",
   "name": "wphaven",
-  "title": "WP Haven",
+  "title": "Wp Haven",
   "description": "WPHaven Automations",
   "icon": "icon-rounded.png",
   "author": "itsjustxan",

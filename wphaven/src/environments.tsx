@@ -387,7 +387,7 @@ function SearchListItem({ searchResult }: { searchResult: SearchResult }) {
               shortcut={{ modifiers: ["cmd"], key: "3" }}
             />
             <Action
-              title="Terminal"
+              title="SSH"
               onAction={sshLink}
               icon={Icon.Terminal}
               shortcut={{ modifiers: ["cmd"], key: "4" }}
@@ -399,7 +399,7 @@ function SearchListItem({ searchResult }: { searchResult: SearchResult }) {
               shortcut={{ modifiers: ["cmd"], key: "5" }}
             />
             <Action
-              title="Clear Cache"
+              title="Clear All Caches"
               onAction={clearCache}
               icon={Icon.Trash}
               shortcut={{ modifiers: ["cmd"], key: "6" }}

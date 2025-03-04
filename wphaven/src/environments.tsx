@@ -33,7 +33,7 @@ export default function Command() {
   // Fetch the list of environments
   const fetchEnvironments = async (): Promise<SearchResult[]> => {
     try {
-      const response = await fetch(`https://webapp--main--wphaven--xan.embold.dev/api/v1/raycast/environments`, {
+      const response = await fetch(`https://wphaven.app/api/v1/raycast/environments`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
@@ -142,7 +142,7 @@ function SearchListItem({ searchResult }: { searchResult: SearchResult }) {
           title: "Generating magic login."
         });
 
-        const url = `https://webapp--main--wphaven--xan.embold.dev/api/v1/raycast/environments/${searchResult.id}/magic-login`;
+        const url = `https://wphaven.app/api/v1/raycast/environments/${searchResult.id}/magic-login`;
 
         // API key from preferences
         const preferences = getPreferenceValues<Preferences>();
@@ -196,7 +196,7 @@ function SearchListItem({ searchResult }: { searchResult: SearchResult }) {
     // Define an async function to make the API call
     const startVsCode = async () => {
       try {
-        const url = `https://webapp--main--wphaven--xan.embold.dev/api/v1/raycast/environments/${searchResult.id}/vscode`;
+        const url = `https://wphaven.app/api/v1/raycast/environments/${searchResult.id}/vscode`;
 
         // API key from preferences
         const preferences = getPreferenceValues<Preferences>();
@@ -243,7 +243,7 @@ function SearchListItem({ searchResult }: { searchResult: SearchResult }) {
     // Define an async function to make the API call
     const startSsh = async () => {
       try {
-        const url = `https://webapp--main--wphaven--xan.embold.dev/api/v1/raycast/environments/${searchResult.id}/ssh`;
+        const url = `https://wphaven.app/api/v1/raycast/environments/${searchResult.id}/ssh`;
 
         // API key from preferences
         const preferences = getPreferenceValues<Preferences>();
@@ -295,7 +295,7 @@ function SearchListItem({ searchResult }: { searchResult: SearchResult }) {
           title: "Attempting to clear cache."
         });
 
-        const url = `https://webapp--main--wphaven--xan.embold.dev/api/v1/raycast/environments/${searchResult.id}/cache`;
+        const url = `https://wphaven.app/api/v1/raycast/environments/${searchResult.id}/cache`;
 
         // API key from preferences
         const preferences = getPreferenceValues<Preferences>();

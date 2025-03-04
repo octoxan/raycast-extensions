@@ -386,12 +386,7 @@ function SearchListItem({ searchResult }: { searchResult: SearchResult }) {
               icon={Icon.Code}
               shortcut={{ modifiers: ["cmd"], key: "3" }}
             />
-            <Action
-              title="SSH"
-              onAction={sshLink}
-              icon={Icon.Terminal}
-              shortcut={{ modifiers: ["cmd"], key: "4" }}
-            />
+            <Action title="SSH" onAction={sshLink} icon={Icon.Terminal} shortcut={{ modifiers: ["cmd"], key: "4" }} />
             <Action.OpenInBrowser
               title="GitHub"
               icon={Icon.Dna}
